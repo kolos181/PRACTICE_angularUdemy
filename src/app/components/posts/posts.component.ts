@@ -35,11 +35,16 @@ export class PostsComponent implements OnInit {
     this.isEdit = true;
   }
 
+  //if I understood correctly, we call this method when we have already done edit to the database.
+  //now we need to bubble edited post to the top
   onUpdatedPost(post: Post) {
     this.posts.forEach((cur, index) => {
       if(post.id === cur.id) {
+        //delete a post from a list
         this.posts.splice(index, 1);
+        //inserts it to the top
         this.posts.unshift(post);
+        this.isEdit = false;
         this.currentPost = {
           id: 0,
           title: '',

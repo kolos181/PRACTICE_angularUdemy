@@ -36,7 +36,9 @@ export class PostFormComponent implements OnInit {
   updatePost() {
     this.postService.updatePost(this.currentPost).subscribe(post => {
       console.log(post);
+      //changes isEdit to false only in postForm component, so in the receiving part. It is still true at the posts
       this.isEdit = false;
+      //so we emmit event back
       this.updatedPost.emit(post);
       }
     );
