@@ -33,13 +33,14 @@ export class PostsComponent implements OnInit {
   editPost(post: Post) {
     this.currentPost = post;
     this.isEdit = true;
+    window.scrollTo(0, 0);
   }
 
   //if I understood correctly, we call this method when we have already done edit to the database.
   //now we need to bubble edited post to the top
   onUpdatedPost(post: Post) {
     this.posts.forEach((cur, index) => {
-      if(post.id === cur.id) {
+      if (post.id === cur.id) {
         //delete a post from a list
         this.posts.splice(index, 1);
         //inserts it to the top
@@ -52,5 +53,17 @@ export class PostsComponent implements OnInit {
         }
       }
     })
+  }
+
+  removePost(post: Post) {
+    if (confirm('Are you sure you want to delete this post?')) {
+      this.postService.removePost(post.id).subscribe(() => {
+        this.posts.forEach((cur, index) => {
+          if (cur.id === post.id) {
+            this.posts.splice(index, 1);
+          }
+        })
+      });
+    }
   }
 }
